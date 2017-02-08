@@ -44,10 +44,14 @@ public class SectionDecoration extends RecyclerView.ItemDecoration {
 
         //设置悬浮栏中文本的画笔
         textPaint = new TextPaint();
+        //抗锯齿
         textPaint.setAntiAlias(true);
+        //设置大小
         textPaint.setTextSize(DensityUtil.dip2px(context, 14));
         textPaint.setColor(Color.DKGRAY);
+            //  设置文本对齐
         textPaint.setTextAlign(Paint.Align.LEFT);
+
         fontMetrics = new Paint.FontMetrics();
         //决定悬浮栏的高度等
         topGap = res.getDimensionPixelSize(R.dimen.sectioned_top);

@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         mContext = this;
+
         recyclerView = (RecyclerView) findViewById(R.id.recycleView);
 
         getData();
@@ -67,44 +68,38 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 解析数据
      *
-     * @param s
+     * @param s 网络请求的JSON字符串
      */
     private void parserData(String s) {
-        //这里使用GsonFormat生成对应的bean类
         JSONObject jsonObject = parseObject(s);
-
         String data = jsonObject.getString("data");
         JSONObject dataObj = parseObject(data);
-
         String coming = dataObj.getString("coming");
         List<ComingBean> comingslist = parseArray(coming, ComingBean.class);
-
         //测试是否解析数据成功
-        String strTest = comingslist.get(0).cat;
-        Log.e("TAG", strTest + "222");
+//        String strTest = comingslist.get(0).cat;
+//        Log.e("TAG", strTest + "222");
         // 解析成功  设置适配器
         setPullAction(comingslist);
         MyRecyclerAdapter adapter = new MyRecyclerAdapter(this, comingslist);
-//  设置RecycleView的布局管理器
+        //  设置RecycleView的布局管理器
         GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(layoutManager);
-
-
-//为RecyclerView添加ItemDecoration:
+        //为RecyclerView添加ItemDecoration:
         recyclerView.addItemDecoration(new SectionDecoration(dataList, mContext, new DecorationCallback() {
             @Override
             public String getGroupId(int position) {
-              if (dataList.get(position).name!=null){
-                  return  dataList.get(position).name;
-              }
-                return  "-1";
+                if (dataList.get(position).name != null) {
+                    return dataList.get(position).name;
+                }
+                return "-1";
             }
 
             @Override
             public String getGroupFirstLine(int position) {
-            if (dataList.get(position).name!=null){
-                return dataList.get(position).name;
-            }
+                if (dataList.get(position).name != null) {
+                    return dataList.get(position).name;
+                }
                 return "";
             }
         }));
